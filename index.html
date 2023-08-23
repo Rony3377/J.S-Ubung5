@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Static Template</title>
+  </head>
+  <style>
+    .feld1 {
+      border-radius: 20px;
+      border: 4px groove rgb(16, 76, 100);
+      background-color: aquamarine;
+      margin: 2px;
+      padding: 1px;
+    }
+    .feld2 {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      align-items: flex-start;
+      border-radius: 20px;
+      border: 4px groove rgb(16, 76, 100);
+      background-color: aquamarine;
+      margin: 2px;
+      padding: 1px;
+    }
+    .p-text {
+      width: 200px;
+      height: 200px;
+    }
+    .sichtbar {
+      display: block;
+    }
+    .versteckt {
+      display: none;
+    }
+
+    img {
+      width: 400px;
+      height: 200px;
+      border-radius: 10px;
+      box-shadow: 4px 4px 4px gray;
+    }
+    .feld3 {
+      border-radius: 20px;
+      border: 4px groove rgb(16, 76, 100);
+      background-color: aquamarine;
+      margin: 2px;
+      padding: 1px;
+      height: 100px;
+    }
+    .feld4 {
+      border-radius: 20px;
+      border: 4px groove rgb(16, 76, 100);
+      background-color: aquamarine;
+      margin: 2px;
+      padding: 1px;
+      height: 100px;
+    }
+  </style>
+  <body>
+    <main>
+      <div id="index">
+        <!-- Text feld1-->
+        <h3 class="feld1">
+          Laptop Testsieger 2023 im Vergleich. Die Besten im Warentest. Beste
+          Laptop im direkten Vergleich. Die Testsieger 2023.
+        </h3>
+        <br /><br />
+        <!--  feld2 div inthalt bider und text-->
+        <div class="feld2">
+          <!-- div mit 3 Bildern -->
+          <div id="b">
+            <!-- Bild mit der id b-0 wird angezeigt -->
+            <img
+              class="sichtbar"
+              id="b-0"
+              src="https://assets.mmsrg.com/isr/166325/c1/-/ASSET_MMS_89098210?x=1800&y=1800&format=jpg&quality=85&sp=yes&strip=yes"
+            />
+            <!-- Bild mit de id b-1 wird versteckt -->
+            <img
+              class="versteckt"
+              id="b-1"
+              src="https://assets.mmsrg.com/isr/166325/c1/-/ASSET_MMS_89098174?x=1800&y=1800&format=jpg&quality=85&sp=yes&strip=yes"
+            />
+            <!-- Bild mit de id b-2 wird versteckt -->
+            <img
+              class="versteckt"
+              id="b-2"
+              src="https://assets.mmsrg.com/isr/166325/c1/-/ASSET_MMS_89098120?x=1800&y=1800&format=jpg&quality=85&sp=yes&strip=yes"
+            />
+          </div>
+          <!-- div mit p text -->
+          <div class="p-text">
+            <p>
+              ACER Aspire 3 (A315-58-3606), Notebook mit 15,6 Zoll Display,
+              Intel® Core™ i3 Prozessor, 8 GB RAM, 256 GB SSD, Intel UHD Grafik,
+              Pure Silver
+            </p>
+          </div>
+        </div>
+        <!--  feld 3 inthalt Buttons zum Zurück- und Weiter-schalten -->
+        <div class="feld3">
+          <button onclick="zuruck()">Zurück</button>
+          <button onclick="weiter()">Weiter</button>
+        </div>
+
+        <!--  Id des betroffenen Bildes zu ermitteln -->
+        <div class="feld4">
+          <div class="versteckt" id="status">
+            0
+          </div>
+        </div>
+      </div>
+    </main>
+    <script>
+      // Verbindung zum HTML-Element mit der ID "main" aufbauen//
+      const e = document.getElementById("index");
+      // Inhalt vorbereiten
+
+      // Das vorherige Bild anzeigen
+      // und das aktuelle verstecken
+      function zuruck() {
+        // Verbindung zum status-Element aufbauen //
+        const p = document.getElementById("status");
+        // Den Wert aus dem status-Element als ZAHL auslesen//
+        const status = parseInt(p.innerHTML);
+        // Den aktuellen Bild-id, welches gerade angezeigt //
+
+        const bild1 = "b-" + status;
+        // Für das nächste Bild benötigen wir eine weitere
+        // Variable
+        let andereIndex;
+        // Wenn die Statusnummer kleiner als 0 ist, dann
+        // übernehmen wir die Nummer des letzten Bildes.
+        // Da wir nur 3 Bilder haben und diese Bilder
+        // b-0, b-1 und b-2 heißen, nehmen wir die Zahl 2,
+        // weil das letzte Bild die Nummer 2 hat.
+        if (status - 1 < 0) andereIndex = 2;
+        // Falls die Statusnummer nicht kleiner 0 ist,
+        // dann können wir sie übernehmen
+        else andereIndex = status - 1;
+        // Nachdem die Statusnummer des nächsten Bildes
+        // ermittelt wurde, können wir die id des nächsten
+        // Bildes nun angeben
+        const bild2 = "b-" + andereIndex;
+        // Beide Bilder werden nun in JavaScript verbunden
+        const b1 = document.getElementById(bild1);
+        const b2 = document.getElementById(bild2);
+        // Das erste Bild wird versteckt
+        b1.classList.remove("sichtbar");
+        b1.classList.add("versteckt");
+        // Das zweite Bild wird angezeigt
+        b2.classList.remove("versteckt");
+        b2.classList.add("sichtbar");
+        // Die neue Statusnummer wird in das HTML-Element
+        // für Status, reingeschrieben. Diese Information
+        // ist nötig, damit wir das nächste Bild wechseln
+        // können.
+        p.innerHTML = andereIndex;
+      }
+      // Das nächste Bild anzeigen und
+      // die vorherige verstecken
+      function weiter() {
+        //
+        const p = document.getElementById("status");
+        const status = parseInt(p.innerHTML);
+        // *** //
+        const bild1 = "b-" + status;
+        // *** //
+        let andereIndex;
+        // Wenn die Statusnummer größer als 2 ist, dann
+        // übernehmen wir die Nummer des ersten Bildes.
+        // Da wir nur 3 Bilder haben und diese Bilder
+        // b-0, b-1 und b-2 heißen, nehmen wir die Zahl 0,
+        // weil das erste Bild die Nummer 0 hat.
+        if (status + 1 > 2) andereIndex = 0;
+        // Falls die Statusnummer nicht größer 2 ist,
+        // dann können wir sie übernehmen
+        else andereIndex = status + 1;
+        // *** //
+        const bild2 = "b-" + andereIndex;
+        // Verbindung zum b1-Element aufbauen //
+        const b1 = document.getElementById(bild1);
+        // Verbindung zum b2-Element aufbauen //
+        const b2 = document.getElementById(bild2);
+        // *** //
+        b1.classList.remove("sichtbar");
+        b1.classList.add("versteckt");
+        // *** //
+        b2.classList.remove("versteckt");
+        b2.classList.add("sichtbar");
+        // *** //
+        p.innerHTML = andereIndex;
+      }
+    </script>
+  </body>
+</html>
